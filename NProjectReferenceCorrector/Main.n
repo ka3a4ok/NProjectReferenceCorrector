@@ -52,13 +52,14 @@ module Program
 					when(IO.Path.GetDirectoryName(p)==NemerlePath)
 					{
 						k.ReplaceWith
-						(	xml<#
-								<$(k.Name) Include=$(k.Element(ns+"Name").Value)>
-									<SpecificVersion>False</SpecificVersion>
-									<HintPath>$('\u0024')(Nemerle)\\ $(IO.Path.GetFileName(p))</HintPath>
-									<Private>True</Private>
-								</$(k.Name)>
-							#>
+						(	xml
+<#
+<$(k.Name) Include=$(k.Element(ns+"Name").Value)>
+	<$(ns+"SpecificVersion")>False</$(ns+"SpecificVersion")>
+	<$(ns+"HintPath")>$('\u0024')(Nemerle)/$(IO.Path.GetFileName(p))</$(ns+"HintPath")>
+	<$(ns+"Private")>True</$(ns+"Private")>
+	</$(k.Name)>
+#>
 						);
 					
 						transformation=true;
