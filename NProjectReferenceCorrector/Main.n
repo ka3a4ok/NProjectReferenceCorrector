@@ -35,21 +35,20 @@ module Program
   	{
 			def ns:XNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
 			def x=using(def rdr:System.IO.TextReader=System.IO.StreamReader(a)) XDocument.Load(rdr);
-
 			mutable transformation=false;
-			foreach(t in x?.Element(ns+"Project")?.Elements(ns+"ItemGroup")??[])
+			foreach(t in x?.Element(ns+"Project")?.Elements(ns+"ItemGroup"))
 			{
 				foreach
-				(  k in 
-						comp enumerable
-						{   def f=a=>t.Elements(ns+a)??[];
+				(  k in
+						comp list //nb!
+						{   def f=a=>t.Elements(ns+a);
 								yieldcomp f("MacroReference");
 								yieldcomp f("Reference");
 						}
 				)
 				{
 					def p=k?.Element(ns+"HintPath")?.Value;
-					when(IO.Path.GetDirectoryName(p)==NemerlePath)
+					when(IO.Path.GetDirectoryName(p)?.ToLowerInvariant()==NemerlePath.ToLowerInvariant())
 					{
 						k.ReplaceWith
 						(	xml

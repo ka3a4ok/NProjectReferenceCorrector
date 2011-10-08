@@ -1,4 +1,4 @@
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NoStdLib>true</NoStdLib>
     <Nemerle Condition=" '$(Nemerle)' == '' ">$(ProgramFiles)\Nemerle</Nemerle>
@@ -35,16 +35,17 @@
     <DocumentationFile>$(OutputPath)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <StartProgram></StartProgram>
+    <StartProgram>
+    </StartProgram>
     <WorkingDirectory>d:\Visual Projects\NProjectReferenceCorrector\wrk</WorkingDirectory>
     <CmdArgs>zzz</CmdArgs>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ComputationExpressions">
-	<SpecificVersion>False</SpecificVersion>
-	<HintPath>$(Nemerle)/ComputationExpressions.dll</HintPath>
-	<Private>True</Private>
-	</Reference>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(Nemerle)/ComputationExpressions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -64,10 +65,10 @@
       <Private>True</Private>
     </Reference>
     <MacroReference Include="ComputationExpressions.Macros">
-	<SpecificVersion>False</SpecificVersion>
-	<HintPath>$(Nemerle)/ComputationExpressions.Macros.dll</HintPath>
-	<Private>True</Private>
-	</MacroReference>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(Nemerle)/ComputationExpressions.Macros.dll</HintPath>
+      <Private>True</Private>
+    </MacroReference>
     <MacroReference Include="Nemerle.Linq">
       <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
     </MacroReference>
