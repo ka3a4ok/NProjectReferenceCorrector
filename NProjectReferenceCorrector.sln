@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{EDCC3B85-0BAD-11DB-BC1A-00112FDE8B61}") = "NProjectReferenceCorrector", "NProjectReferenceCorrector\NProjectReferenceCorrector.nproj", "{7621D171-A57E-4BEB-B46A-2FF00376F765}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7621D171-A57E-4BEB-B46A-2FF00376F765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7621D171-A57E-4BEB-B46A-2FF00376F765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7621D171-A57E-4BEB-B46A-2FF00376F765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7621D171-A57E-4BEB-B46A-2FF00376F765}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

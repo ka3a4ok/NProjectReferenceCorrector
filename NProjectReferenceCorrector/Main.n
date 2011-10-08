@@ -1,0 +1,92 @@
+﻿using Nemerle.Collections;
+using Nemerle.Text;
+using Nemerle.Utility;
+using Nemerle.Xml;
+using Nemerle.ComputationExpressions;
+
+using System;
+using System.Collections.Generic;
+using System.Console;
+using System.Linq;
+using System.Xml.Linq;
+
+module Program
+{
+  Main() : void
+  {
+  	def t=
+  		System.IO.Directory.GetFiles
+  		(  System.Environment.GetCommandLineArgs()[1],
+  			 "*.nproj",
+  			 System.IO.SearchOption.AllDirectories
+  		);
+  	
+  	def NemerlePath=
+  		IO.Path.GetFullPath
+  		( if(System.Environment.GetCommandLineArgs().Length>2)	
+  				System.Environment.GetCommandLineArgs()[2]
+				else 
+					@"C:\Program Files\Nemerle"
+			);
+		
+		def backup_ext=".npcbckp";
+  		
+  	def CorrectFile(a)
+  	{
+			def ns:XNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
+			def x=using(def rdr:System.IO.TextReader=System.IO.StreamReader(a)) XDocument.Load(rdr);
+
+			mutable transformation=false;
+			foreach(t in x?.Element(ns+"Project")?.Elements(ns+"ItemGroup")??[])
+			{
+				foreach
+				(  k in 
+						comp enumerable
+						{   def f=a=>t.Elements(ns+a)??[];
+								yieldcomp f("MacroReference");
+								yieldcomp f("Reference");
+						}
+				)
+				{
+					def p=k?.Element(ns+"HintPath")?.Value;
+					when(IO.Path.GetDirectoryName(p)==NemerlePath)
+					{
+						k.ReplaceWith
+						(	xml<#
+								<$(k.Name) Include=$(k.Element(ns+"Name").Value)>
+									<SpecificVersion>False</SpecificVersion>
+									<HintPath>$('\u0024')(Nemerle)\\ $(IO.Path.GetFileName(p))</HintPath>
+									<Private>True</Private>
+								</$(k.Name)>
+							#>
+						);
+					
+						transformation=true;
+					}
+				}
+			}
+
+			when(transformation)
+			{
+				IO.File.Move(a, a+backup_ext);
+	  		using(def wrtr:System.IO.TextWriter=IO.StreamWriter(a))
+	  			wrtr.Write(x);
+			}
+  	}
+  		
+  	foreach(f in t)
+  	{
+  		if(IO.File.Exists(f+backup_ext))
+  		{
+  			IO.File.Delete(f);
+				IO.File.Move(f+backup_ext, f);
+  		}
+  		else
+  		{
+				CorrectFile(f);
+  		}
+		}
+		
+			_=ReadLine();
+  }
+}
