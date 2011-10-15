@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NoStdLib>true</NoStdLib>
     <Nemerle Condition=" '$(Nemerle)' == '' ">$(ProgramFiles)\Nemerle</Nemerle>
@@ -35,8 +35,7 @@
     <DocumentationFile>$(OutputPath)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <StartProgram>
-    </StartProgram>
+    <StartProgram></StartProgram>
     <WorkingDirectory>d:\Visual Projects\NProjectReferenceCorrector\wrk</WorkingDirectory>
     <CmdArgs>zzz</CmdArgs>
   </PropertyGroup>
@@ -58,7 +57,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="Nemerle">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(Nemerle)\Nemerle.dll</HintPath>
@@ -72,12 +70,11 @@
     <MacroReference Include="Nemerle.Linq">
       <HintPath>$(Nemerle)\Nemerle.Linq.dll</HintPath>
     </MacroReference>
-    <MacroReference Include="Nemerle.Xml.Macro, Version=1.0.279.0, Culture=neutral, PublicKeyToken=null">
-      <Name>Nemerle.Xml.Macro</Name>
-      <AssemblyName>Nemerle.Xml.Macro.dll</AssemblyName>
-      <HintPath>C:\Program Files\Nemerle\Nemerle.Xml.Macro.dll</HintPath>
-      <Private>False</Private>
-    </MacroReference>
+    <MacroReference Include="Nemerle.Xml.Macro">
+	<SpecificVersion>False</SpecificVersion>
+	<HintPath>$(Nemerle)/Nemerle.Xml.Macro.dll</HintPath>
+	<Private>True</Private>
+	</MacroReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.n" />

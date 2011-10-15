@@ -33,20 +33,20 @@ module Program
   		
   	def CorrectFile(a)
   	{
-			def ns:XNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
-			def x=using(def rdr:System.IO.TextReader=System.IO.StreamReader(a)) XDocument.Load(rdr);
-			mutable transformation=false;
-			foreach(t in x?.Element(ns+"Project")?.Elements(ns+"ItemGroup"))
+	    def ns:XNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
+		def x=using(def rdr:System.IO.TextReader=System.IO.StreamReader(a)) XDocument.Load(rdr);
+		mutable transformation=false;
+		foreach(t in x?.Element(ns+"Project")?.Elements(ns+"ItemGroup"))
+		{
+		    foreach
+			(  k in
+			    comp list //nb!
+				{   def f=a=>t.Elements(ns+a);
+				    yieldcomp f("MacroReference");
+					yieldcomp f("Reference");
+				}
+			)
 			{
-				foreach
-				(  k in
-						comp list //nb!
-						{   def f=a=>t.Elements(ns+a);
-								yieldcomp f("MacroReference");
-								yieldcomp f("Reference");
-						}
-				)
-				{
 					def p=k?.Element(ns+"HintPath")?.Value;
 					when(IO.Path.GetDirectoryName(p)?.ToLowerInvariant()==NemerlePath.ToLowerInvariant())
 					{
@@ -69,14 +69,14 @@ module Program
 			when(transformation)
 			{
 				IO.File.Move(a, a+backup_ext);
-	  		using(def wrtr:System.IO.TextWriter=IO.StreamWriter(a))
-	  			wrtr.Write(x);
+	  		    using(def wrtr:System.IO.TextWriter=IO.StreamWriter(a))
+	  			    wrtr.Write(x);
 			}
   	}
   		
   	foreach(f in t)
   	{
-  		if(IO.File.Exists(f+backup_ext))
+  	    if(IO.File.Exists(f+backup_ext))
   		{
   			IO.File.Delete(f);
 				IO.File.Move(f+backup_ext, f);
@@ -85,6 +85,6 @@ module Program
   		{
 				CorrectFile(f);
   		}
-		}
+	}
   }
 }
